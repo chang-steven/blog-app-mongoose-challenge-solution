@@ -2,3 +2,10 @@ language: node_js
 node_js: node
 services:
 - mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: ZnaLQ4yeJADpDSnBCTlF83389BAb6nrb7/rpZphfgUbsxIrG1V73tUmu9eRh65gN+n3yX8JLO2ozo4U04RySMQZZChVQD2leuYhLQLZIc/VXoydT68HrkEOoqUTysWF1VDC3x3OvQBlSyMUnlfQSHVahAqzNLfBiUL3nktQPJDGItk+eml7Vj1BXD5vQj3ElNSCV2XzShigY6rQOrFG7rVb5U2/5g8QuhtfAr9PVJ2cDdJYW3MeFYuUdzSg8GupyJorQBwIhHlJQqPKmj7pPVOoPH3M3B58h4eCHvWIvpFkDZTsnPt5KeCWT/wJiLhmmnTLynAG1+u/Og0f/8ub8YNHmkj6MCloOz/3fmcgSl5czP8oafF+5a/dk0OXv5lUefriPH0A2UW06RsIjJ9dKdcpkgZcNoZPAhk7i+3pcKGAIjxp5cG+EM4AGOmQ1XoFCRV0oCjWjD3huWve9quV1xrbYeB0APsvtqmWbZQkEPAMBwFx8oXyUiCcaQrtMc6dxD9ytm/6mCZu9u7JDfOByY/vcMmfJC091U29JbZlbC8qnkTTu4zwlwB7ELCIG7xJyhz4QpzaeDqz4S7TnaVMqIp88bV3iNAvbDp+KIIaejRLY5UQk/h+zybTh7MJEZXbpl+TiL4pM+OAcB2XZi9W8DAUvt38fQzq8oQ7yhwhyOwU=
+  app: morning-tor-53852
+  on:
+    repo: chang-steven/blog-app-mongoose-challenge-solution
