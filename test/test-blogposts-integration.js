@@ -104,7 +104,14 @@ describe('Blog Post API', function() {
       .send(newBlogPost)
       .then(function(res) {
         res.should.have.status(201);
-      });
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.include.keys(
+          'id', 'author', 'title', 'content', 'created'
+        );
+        res.body.author.should.contain(newBlogPost.author.firstName);
+        res.body.title.should.equal(newBlogPost.title);
+      })
     });
   });
 
@@ -118,16 +125,37 @@ describe('Blog Post API', function() {
       .findOne()
       .then(function(blog) {
         updatedBlogPost.id = blog.id;
-        console.log(updatedBlogPost);
         return chai.request(app)
         .put(`/posts/${blog.id}`)
         .send(updatedBlogPost)
       })
       .then(function(res) {
         res.should.have.status(204);
+        return BlogPost.findById(updatedBlogPost.id)
+      })
+      .then(function(check) {
+        check.content.should.equal(updatedBlogPost.content);
+        check.title.should.equal(updatedBlogPost.title);
       });
     });
+
+    it('Should throw an error trying to update existing blog post', function() {
+      let updateErrorBlog = {
+        title: "New Post",
+        content: "Blah blah"
+      };
+      return BlogPost
+      .findOne()
+      .then(function(blog) {
+        return chai.request(app)
+        .put(`/posts/${blog.id}`)
+        .send(updateErrorBlog)
+      })
+      .catch(function(res) {
+        res.should.have.status(400);
+      });
   });
+});
 
   describe('DELETE endpoint', function() {
     it('Should delete an existing endpoint', function() {
@@ -146,8 +174,14 @@ describe('Blog Post API', function() {
       .then(function(res) {
         should.not.exist(res);
       });
-
     });
-  });
 
+    it('Should catch an error trying to Delete by incorrect ID', function() {
+      return chai.request(app)
+      .delete('/posts/xyz')
+      .catch(function(res) {
+        res.should.have.status(500);
+      });
+    })
+  });
 });
